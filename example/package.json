@@ -1,0 +1,29 @@
+{
+    "name" : "nodeaddon-debug-example",
+    "version" : "0.0.0",
+    "description" : "Demoing how to develop a node addon with help of Xcode to support debugging and navigating the code base.",
+    "main" : "index.js",
+    "scripts" : {
+      "install-gyp": "git clone --depth 1 https://chromium.googlesource.com/external/gyp.git gyp"
+    },
+    "repository" : {
+      "type" : "git",
+      "url" : "git://github.com/thlorenz/nodeaddon-debug.git"
+    },
+    "homepage" : "https://github.com/thlorenz/nodeaddon-debug",
+    "dependencies" : {
+    },
+    "devDependencies" : {
+    },
+    "keywords": [] ,
+    "author" : {
+      "name" : "Thorsten Lorenz",
+      "email" : "thlorenz@gmx.de",
+      "url" : "http://thlorenz.com"
+    },
+    "license" : {
+      "type": "MIT",
+      "url": "https://github.com/thlorenz/nodeaddon-debug/blob/master/LICENSE"
+    },
+    "engine" : { "node" : ">=0.8" }
+}
