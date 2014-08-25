@@ -2,10 +2,11 @@
   'targets': [
     {
       'target_name': 'node-slre-app',
+      'type': 'executable',
       'sources': [
          './src/main.cc',
          './src/node-slre.cc',
-         './deps/slre.c'
+         './deps/slre/slre.c'
       ],
       'includes': [
         'common.gypi'

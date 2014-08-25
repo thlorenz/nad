@@ -4,7 +4,8 @@
     "description" : "Demoing how to develop a node addon with help of Xcode to support debugging and navigating the code base.",
     "main" : "index.js",
     "scripts" : {
-      "install-gyp": "git clone --depth 1 https://chromium.googlesource.com/external/gyp.git gyp"
+      "install-gyp": "git clone --depth 1 https://chromium.googlesource.com/external/gyp.git gyp",
+      "xcode": "./gyp/gyp node-slre-app.gyp --depth=. -f xcode --generator-output=./build"
     },
     "repository" : {
       "type" : "git",
