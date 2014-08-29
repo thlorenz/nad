@@ -2,6 +2,35 @@
 #include "slre.h"
 #include <stdio.h>
 #include <string.h>
+#include <v8.h>
+#include <unistd.h>
+
+// Reads a file into a v8 string.
+v8::Handle<v8::String> ReadFile(const char* name) {
+  FILE* file = fopen(name, "rb");
+  if (file == NULL) return v8::Handle<v8::String>();
+
+  fseek(file, 0, SEEK_END);
+  int size = ftell(file);
+  rewind(file);
+
+  char* chars = new char[size + 1];
+  chars[size] = '\0';
+  for (int i = 0; i < size;) {
+    int read = static_cast<int>(fread(&chars[i], 1, size - i, file));
+    i += read;
+  }
+  fclose(file);
+  v8::Handle<v8::String> result = v8::String::New(chars, size);
+  delete[] chars;
+  return result;
+}
+
+void print_cwd() {
+  char cwd[1024];
+  getcwd(cwd, sizeof(cwd));
+  fprintf(stderr, "cwd: %s\n", cwd);
+}
 
 void pure_c() {
   fprintf(stderr, "Testing Regex Function via pure C API\n");
@@ -16,7 +45,28 @@ void pure_c() {
   }
 }
 
+void js() {
+  using namespace v8;
+  Isolate *isolate = Isolate::GetCurrent();
+  HandleScope handle_scope;
+  Handle<Context> context = Context::New();
+  Context::Scope context_scope(context);
+
+  Handle<Object> global = context->Global();
+
+  global->Set(v8::String::NewSymbol("slre_match"), v8::FunctionTemplate::New(node_slre_match)->GetFunction());
+
+  Handle<String> src = ReadFile("test.js");
+  
+  
+  Handle<Value> result = Script::Compile(src)->Run();
+  fprintf(stderr, "%s\n", *String::Utf8Value(result));
+  
+}
+
 int main(void) {
-  pure_c();
+  print_cwd();
+  //pure_c();
+  js();
   return 0;
 }
