@@ -8,7 +8,7 @@
 
 #include "slre.h"
 #include <node.h>
-//#include <v8.h>
+#include <v8.h>
 
 void init_node_srle(v8::Handle<v8::Object> exports);
 

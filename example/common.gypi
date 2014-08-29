@@ -1,7 +1,7 @@
 {
   "conditions": [
-    ["OS=='win'", 
-    { 
+    ["OS=='win'",
+    {
       "target_defaults": {
         "default_configuration": "Release_x64",
         "configurations": {
