@@ -7,8 +7,14 @@
 #define _NODE_SLRE_H_
 
 #include "slre.h"
-#include <node.h>
+
+
+
 #include <v8.h>
+
+
+
+using namespace v8;
 
 void init_node_srle(v8::Handle<v8::Object> exports);
 

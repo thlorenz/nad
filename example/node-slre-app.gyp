@@ -11,7 +11,7 @@
          'test.js'
       ],
       'includes': [
-        'common.gypi'
+        'common.gypi', 
       ],
       'include_dirs': [
         './deps/node/src',
@@ -21,6 +21,7 @@
         './deps/node/deps/uv/src/unix',
         './deps/node/deps/uv/include',
         './deps/node/deps/http_parser',
+        './deps/node/deps/cares/include',
         './deps/slre',
         '<!(node -e "require(\'nan\')")'
       ],
@@ -31,8 +32,8 @@
         './deps/node/out/Debug/libchrome_zlib.a',
         './deps/node/out/Debug/libhttp_parser.a',
         './deps/node/out/Debug/libopenssl.a',
-        './deps/node/out/Debug/libuv.a'
+        './deps/node/out/Debug/libuv.a',
       ]
-    }
+    },
   ]
 }
