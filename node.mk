@@ -28,9 +28,13 @@ $(NODE):
 	cd ./deps && curl -L $(NODE_URL) | tar xvf - && \
 	mv node-$(NODE_VERSION_NUM) node
 
+get_node: $(NODE)
+
 $(NODE_EXE): $(NODE)
 	cd $(NODE) &&                             \
 	./configure --debug --without-snapshot && \
 	CC=$(CC) CXX=$(CXX) $(MAKE) -j$(CPUS)
 
 node: $(NODE_EXE)
+
+.PHONY: node get_node
