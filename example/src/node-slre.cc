@@ -1,16 +1,19 @@
 #include "node-slre.h"
-#include <node.h>
-//#include <v8.h>
 
-v8::Handle<v8::Value> node_slre_match(const v8::Arguments& args) {
-  v8::HandleScope scope;
-  return scope.Close(v8::String::New("world"));
+// include before NAN to have NODE_MODULE_VERSION defined
+#include <node.h>
+#include <nan.h>
+
+NAN_METHOD(node_slre_match) {
+  NanScope();
+  
+  NanReturnValue(NanNew<v8::String>("world"));
 }
 
 void init_node_srle(v8::Handle<v8::Object> exports) {
   exports->Set(
-      v8::String::NewSymbol("slre_match"),
-      v8::FunctionTemplate::New(node_slre_match)->GetFunction());
+      NanNew<v8::String>("slre_match"),
+      NanNew<v8::FunctionTemplate>(node_slre_match)->GetFunction());
 
 }
 

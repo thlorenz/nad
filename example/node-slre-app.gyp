@@ -21,7 +21,8 @@
         './deps/node/deps/uv/src/unix',
         './deps/node/deps/uv/include',
         './deps/node/deps/http_parser',
-        './deps/slre'
+        './deps/slre',
+        '<!(node -e "require(\'nan\')")'
       ],
       'libraries': [
         './deps/node/out/Debug/libv8_base.a',
