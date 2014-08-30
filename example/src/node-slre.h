@@ -6,13 +6,10 @@
 #ifndef _NODE_SLRE_H_
 #define _NODE_SLRE_H_
 
+#define OVERRIDE_NAN 1
+
 #include "slre.h"
-
-
-
-#include <v8.h>
-
-
+#include <nan.h>
 
 using namespace v8;
 
