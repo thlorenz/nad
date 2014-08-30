@@ -10,6 +10,6 @@
 #include <node.h>
 #include <v8.h>
 
-v8::Handle<v8::Value> node_slre_match(const v8::Arguments& args);
+void init_node_srle(v8::Handle<v8::Object> exports);
 
 #endif

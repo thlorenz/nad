@@ -52,16 +52,12 @@ void js() {
   Handle<Context> context = Context::New();
   Context::Scope context_scope(context);
 
-  Handle<Object> global = context->Global();
-
-  global->Set(v8::String::NewSymbol("slre_match"), v8::FunctionTemplate::New(node_slre_match)->GetFunction());
+  init_node_srle(context->Global());
 
   Handle<String> src = ReadFile("test.js");
   
-  
   Handle<Value> result = Script::Compile(src)->Run();
-  fprintf(stderr, "%s\n", *String::Utf8Value(result));
-  
+  fprintf(stderr, "Script returned: [%s]\n", *String::Utf8Value(result));
 }
 
 int main(void) {
