@@ -1,8 +1,23 @@
 'use strict';
 
-console.log('Starting up index.js');
-var binding = process.binding('hello')
+function inspect(obj, depth) {
+  console.error(require('util').inspect(obj, false, depth || 5, true));
+}
 
-var hello = binding.hello;
+var hello_binding = process.binding('hello')
+var hello = hello_binding.hello;
 
-console.log(hello());
+console.log('hello', hello());
+
+var slre_binding = process.binding('slre')
+
+var request = 'GET /index.html HTTP/1.0\r\n\r\n"';
+var regex = '^\\s*(\\S+)\\s+(\\S+)\\s+HTTP/(\\d)\\.(\\d)';
+var ncaps = 4;
+var flags = 0;
+
+function onmatched(){
+  console.dir(arguments);
+}
+
+slre_binding.match(regex, request, ncaps, flags, onmatched)
