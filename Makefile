@@ -1,28 +1,44 @@
-include node.mk
+CC?=clang
+CXX=clang++
+LINK=clang++
 
-ROOT = $(dir $(lastword $(MAKEFILE_LIST)))
+ROOT 		 := $(CURDIR)
+NODE      = $(ROOT)node/
+NODE_EXE  = $(NODE)node_g
+NODE_VERSION ?= $(shell node -e 'console.log(process.version)')
+NODE_VERSION_NUM=$(subst v,,$(NODE_VERSION))
+NODE_URL=https://github.com/joyent/node/archive/$(NODE_VERSION).tar.gz
 
-AR ?= ar
+uname_S=$(shell uname -s)
 
-CFLAGS = -I$(V8)include/
-NODE_DEBUG=$(NODE)out/Debug/
+CPUS ?= 1
+ifeq (Darwin, $(uname_S))
+	CPUS=$(shell sysctl hw.availcpu | sed -e 's/hw.availcpu = //')
+endif
 
-LDFLAGS =                             \
-	-Wl,--start-group                   \
-			$(NODE_DEBUG)libv8_base.a       \
-			$(NODE_DEBUG)libv8_nosnapshot.a \
-	-Wl,--end-group                     \
-	$(NODE_DEBUG)libcares.a             \
-	$(NODE_DEBUG)libchrome_zlib.a       \
-	$(NODE_DEBUG)libhttp_parser.a       \
-	$(NODE_DEBUG)libopenssl.a           \
-	$(NODE_DEBUG)libuv.a                \
-	-lpthread                           \
-	-lrt 
+ifeq (Linux, $(uname_S))
+	CPUS=$(shell lscpu -p | egrep -v '^#' | wc -l)
+endif
 
-clean:
-	find . -name "*.gc*" -exec rm {} \;
-	rm -rf `find . -name "*.dSYM" -print`
-	rm -f *.o
+log: 
+	@echo url $(NODE_URL)
+	@echo node version num $(NODE_VERSION_NUM)
 
-.PHONY: clean 
+$(NODE): 
+	curl -L $(NODE_URL) | tar xvf - && \
+	mv node-$(NODE_VERSION_NUM) node
+
+get_node: $(NODE)
+
+$(NODE_EXE): $(NODE)
+	cd $(NODE) &&                                     \
+	./configure --debug --xcode --without-snapshot && \
+	cat config.mk &&                                  \
+	CC=$(CC) CXX=$(CXX) $(MAKE) -j$(CPUS) out/Makefile node_g 
+
+clean_node:
+	rm -rf $(NODE)
+
+node: $(NODE_EXE)
+
+.PHONY: node get_node clean_node
