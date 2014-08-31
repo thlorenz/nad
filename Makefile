@@ -2,12 +2,13 @@ CC?=clang
 CXX=clang++
 LINK=clang++
 
-ROOT 		 := $(CURDIR)
-NODE      = $(ROOT)node/
-NODE_EXE  = $(NODE)node_g
 NODE_VERSION ?= $(shell node -e 'console.log(process.version)')
 NODE_VERSION_NUM=$(subst v,,$(NODE_VERSION))
 NODE_URL=https://github.com/joyent/node/archive/$(NODE_VERSION).tar.gz
+
+ROOT 		 		 := $(CURDIR)/
+NODE      		= $(ROOT)node-$(NODE_VERSION_NUM)/
+NODE_EXE  		= $(NODE)node_g
 
 uname_S=$(shell uname -s)
 
@@ -25,8 +26,7 @@ log:
 	@echo node version num $(NODE_VERSION_NUM)
 
 $(NODE): 
-	curl -L $(NODE_URL) | tar xvf - && \
-	mv node-$(NODE_VERSION_NUM) node
+	curl -L $(NODE_URL) | tar xvf -
 
 get_node: $(NODE)
 
@@ -36,8 +36,11 @@ $(NODE_EXE): $(NODE)
 	cat config.mk &&                                  \
 	CC=$(CC) CXX=$(CXX) $(MAKE) -j$(CPUS) out/Makefile node_g 
 
+rebuild:
+	rm -rf $(NODE_EXE) && $(MAKE) node
+
 clean_node:
-	rm -rf $(NODE)
+	(cd  $(NODE) && $(MAKE) clean)
 
 node: $(NODE_EXE)
 
