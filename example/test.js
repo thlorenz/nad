@@ -4,6 +4,7 @@ var logs = [ ];
 
 var request = 'GET /index.html HTTP/1.0\r\n\r\n"';
 var regex = '^\\s*(\\S+)\\s+(\\S+)\\s+HTTP/(\\d)\\.(\\d)';
+var ncaps = 4;
 var flags = 0;
 
 function onmatched(){
@@ -13,7 +14,7 @@ function onmatched(){
 }
 
 logs.push('Calling match');
-slre_match(regex, request, flags, onmatched)
+slre_match(regex, request, ncaps,  flags, onmatched)
 logs.push('Called match');
 
 (function() { return logs.join('\n'); })();

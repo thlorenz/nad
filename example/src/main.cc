@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <v8.h>
+#include <node.h>
 #include <unistd.h>
 
 
@@ -22,7 +23,7 @@ v8::Handle<v8::String> ReadFile(const char* name) {
     i += read;
   }
   fclose(file);
-  v8::Handle<v8::String> result = v8::String::New(chars, size);
+  v8::Handle<v8::String> result = NanNew(chars, size);
   delete[] chars;
   return result;
 }
@@ -49,21 +50,18 @@ void pure_c() {
 void js() {
   using namespace v8;
   Isolate *isolate = Isolate::GetCurrent();
-  HandleScope handle_scope;
-  Handle<Context> context = Context::New();
+  NanScope();
+  
+  Handle<Context> context = NanNew<Context>();
   Context::Scope context_scope(context);
-
   init_node_srle(context->Global());
 
   Handle<String> src = ReadFile("test.js");
-  
   Handle<Value> result = Script::Compile(src)->Run();
+  
   fprintf(stderr, "Script returned: [%s]\n", *String::Utf8Value(result));
 }
 
-int main(void) {
-  print_cwd();
-  //pure_c();
+ int main(int argc, char *argv[]) {
   js();
-  return 0;
 }

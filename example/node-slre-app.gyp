@@ -8,7 +8,8 @@
          './deps/slre/slre.c',
          './src/main.cc',
          './src/node-slre.h',
-         '<!(node -e "require(\'nawn\')")/nan.h',
+         '<!(node -e "require(\'nan\')")/nan.h',
+        './deps/node/src/',
          'test.js'
       ],
       'includes': [
@@ -24,7 +25,7 @@
         './deps/node/deps/http_parser',
         './deps/node/deps/cares/include',
         './deps/slre',
-        '<!(node -e "require(\'nawn\')")',
+        '<!(node -e "require(\'nan\')")',
         './src'
       ],
       'libraries': [
@@ -35,7 +36,8 @@
         './deps/node/out/Debug/libhttp_parser.a',
         './deps/node/out/Debug/libopenssl.a',
         './deps/node/out/Debug/libuv.a',
-      ]
+        './deps/node/out/Debug/libnode.a',
+      ],
     },
   ]
 }
