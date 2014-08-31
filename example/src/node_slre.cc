@@ -1,4 +1,3 @@
-#include "node-slre.h"
 #include "slre.h"
 
 #include <nan.h>
@@ -13,7 +12,7 @@ NAN_METHOD(node_slre_match) {
   v8::Local<v8::Integer> ncaps_handle = args[2].As<v8::Integer>();
   v8::Local<v8::Integer> flags = args[3].As<v8::Integer>();
   NanCallback *cb = new NanCallback(args[4].As<v8::Function>());
- 
+
   const int ncaps = ncaps_handle->Int32Value();
   struct slre_cap caps[ncaps];
   slre_match(*regex, *s, s.Size(), caps, ncaps, flags->Int32Value());
@@ -30,7 +29,7 @@ NAN_METHOD(node_slre_match) {
   for (int i = 0; i < ncaps; i++) {
     argv[i] = NanNew(caps[i].ptr);
    }
- 
+
   cb->Call(ncaps, argv);
   NanReturnUndefined();
 }
