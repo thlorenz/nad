@@ -1,0 +1,81 @@
+# shortened to protect the innocent
+{
+  'variables': {
+    'v8_use_snapshot%': 'true',
+    'node_shared_openssl%': 'false',
+    'node_bar_addon%': 'true',
+    'library_files': [
+      'src/node.js',
+    ],
+  },
+
+  'targets': [
+    {
+      'target_name': 'node',
+      'type': 'executable',
+
+      'dependencies': [
+        'node_js2c#host',
+      ],
+
+      'include_dirs': [
+        'src',
+        '<(SHARED_INTERMEDIATE_DIR)', # for node_natives.h
+      ],
+
+      'sources': [
+        'src/v8_typed_array.h',
+        # javascript files to make for an even more pleasant IDE experience
+        '<@(library_files)',
+      ],
+
+      'defines': [
+        'NODE_TAG="<(node_tag)"',
+      ],
+
+      'conditions': [
+        ['node_bar_addon=="true"', {
+          'target_name': 'node_bar',
+          'sources': [ 
+              # this file was renamed and should be changed if condition is properly replaced
+              './src/node_bar_previous.cc',
+            ],
+            'include_dirs': [
+              './deps/bar',
+              '<!(node -e "require(\'nan\')")',
+            ],
+        }],
+        [ 'node_use_openssl=="true"', {
+          'defines': [ 'HAVE_OPENSSL=1' ],
+          'sources': [ 'src/node_crypto.cc' ],
+          'conditions': [
+            [ 'node_shared_openssl=="false"', {
+              'dependencies': [
+                './deps/openssl/openssl.gyp:openssl',
+              ],
+              # Do not let unused OpenSSL symbols to slip away
+              'xcode_settings': {
+                'OTHER_LDFLAGS': [
+                  '-Wl,-force_load,<(PRODUCT_DIR)/libopenssl.a',
+                ],
+              },
+              'conditions': [
+                ['OS in "linux freebsd"', {
+                  'ldflags': [
+                    '-Wl,--whole-archive <(PRODUCT_DIR)/libopenssl.a -Wl,--no-whole-archive',
+                  ],
+                }],
+              ],
+            }]]
+        }, 
+        {
+          'defines': [ 'HAVE_OPENSSL=0' ]
+        }],
+      ],
+    },
+    {
+      'target_name': 'node_etw',
+      'type': 'none',
+    },
+  ] # end targets
+}
