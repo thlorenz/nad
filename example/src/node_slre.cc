@@ -20,7 +20,8 @@ NAN_METHOD(node_slre_match) {
   v8::Local<v8::Value> argv[MAX_SLRE_CAPS];
 
   for (int i = 0; i < ncaps; i++) {
-    argv[i] = NanNew(caps[i].ptr);
+    v8::Local<v8::String> s_handle = NanNew<v8::String>(caps[i].ptr);
+    argv[i] = s_handle;
    }
 
   cb->Call(ncaps, argv);

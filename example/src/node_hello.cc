@@ -8,8 +8,8 @@ NAN_METHOD(Hello) {
   NanReturnValue(NanNew("world"));
 }
 
-void init_node_hello(v8::Handle<v8::Object> exports) {
+void init_hello(v8::Handle<v8::Object> exports) {
   NODE_SET_METHOD(exports, "hello", Hello);
 }
 
-NODE_MODULE(node_hello, init_node_hello)
+NODE_MODULE(node_hello, init_hello)
