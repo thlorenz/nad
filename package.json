@@ -1,20 +1,16 @@
 {
-  "name": "nodeaddon-debug",
+  "name": "nad",
   "version": "0.0.0",
-  "description": "Demoing how to develop a node addon with help of Xcode to support debugging and navigating the code base.",
+  "description": "Node Addon Developer, a tool to inject your addon code into a copy of the node codebase in order to integrate with IDEs and debuggers easily.",
   "main": "index.js",
   "scripts": {
-    "test-main": "tap test/*.js",
-    "test-0.8": "nave use 0.8 npm run test-main",
-    "test-0.10": "nave use 0.10 npm run test-main",
-    "test-all": "npm run test-main && npm run test-0.8 && npm run test-0.10",
-    "test": "if [ -e $TRAVIS ]; then npm run test-all; else npm run test-main; fi"
+    "test": "set -e; for t in test/*.js; do node $t; done"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/thlorenz/nodeaddon-debug.git"
+    "url": "git://github.com/thlorenz/nad.git"
   },
-  "homepage": "https://github.com/thlorenz/nodeaddon-debug",
+  "homepage": "https://github.com/thlorenz/nad",
   "dependencies": {
     "gyp-reader": "0.0.2",
     "npmlog": "~0.1.1"
@@ -30,7 +26,7 @@
   },
   "license": {
     "type": "MIT",
-    "url": "https://github.com/thlorenz/nodeaddon-debug/blob/master/LICENSE"
+    "url": "https://github.com/thlorenz/nad/blob/master/LICENSE"
   },
   "engine": {
     "node": ">=0.8"

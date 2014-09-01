@@ -1,6 +1,6 @@
-# nodeaddon-debug
+# nad
 
-Demoing how to develop a node addon with help of Xcode to support debugging and navigating the code base.
+Node Addon Developer, a tool to inject your addon code into a copy of the node codebase in order to integrate with IDEs and debuggers easily.
 
 ```js
 // TODO
@@ -9,9 +9,10 @@ Demoing how to develop a node addon with help of Xcode to support debugging and 
 ## Status
 
 Nix, Nada, Nichevo, Nothing --> go away!
+
 ## Installation
 
-    npm install nodeaddon-debug
+    npm install nad
 
 ## API
 
