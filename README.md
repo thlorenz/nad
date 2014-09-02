@@ -2,9 +2,7 @@
 
 Node Addon Developer, a tool to inject your addon code into a copy of the node codebase in order to integrate with IDEs and debuggers easily.
 
-```js
-// TODO
-```
+![level-sample](https://raw.githubusercontent.com/thlorenz/nad/master/assets/level-sample.png)
 
 ## Installation
 

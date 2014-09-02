@@ -4,7 +4,7 @@
   },
   "source": {
     "includePattern": ".+\\.js(doc)?$",
-    "excludePattern": ".*(node_modules|test|example|sample|bin)"
+    "excludePattern": ".*(node_modules|test|example|sample|bin|assets)"
   },
   "plugins": [ "plugins/markdown" ],
   "markdown": {
