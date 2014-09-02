@@ -22,7 +22,7 @@ test('\ngiven a fresh node.gyp and a binding.gyp with valid foo bar and baz targ
     if (err) { t.fail(err); return t.end(); }
     var ret = adaptNodeGyp(projectDir, nodeDir, res.binding_gyp, res.node_gyp)
     t.deepEqual(
-        ret.variables
+        ret.node_gyp.variables
       , { 'node_shared_openssl%': 'false',
           'v8_use_snapshot%': 'true',
           library_files: [ 'src/node.js' ],
@@ -32,7 +32,7 @@ test('\ngiven a fresh node.gyp and a binding.gyp with valid foo bar and baz targ
       , 'injects correct variables leaving out invalid addon'
     )
     t.deepEqual(
-        ret.targets
+        ret.node_gyp.targets
       , [ { target_name: 'node',
             conditions:
               [ [ 'node_baz_addon=="true"',
@@ -75,6 +75,13 @@ test('\ngiven a fresh node.gyp and a binding.gyp with valid foo bar and baz targ
           { target_name: 'node_etw', type: 'none' } ]
       , 'injects addon conditions only into node target with adjusted paths, leaving out invalid addon'
     )
+    t.deepEqual(
+        ret.extensions
+      , [ 'node_foo_addon',
+          'node_bar_addon',
+          'node_baz_addon' ] 
+      , 'returns added extensions'
+    )
 
     t.end()
   }
@@ -87,7 +94,7 @@ test('\ngiven a node.gyp into which node_bar addon was injected previously and a
     if (err) { t.fail(err); return t.end(); }
     var ret = adaptNodeGyp(projectDir, nodeDir, res.binding_gyp, res.node_gyp)
     t.deepEqual(
-        ret.variables
+        ret.node_gyp.variables
       , { 'node_shared_openssl%': 'false',
           'v8_use_snapshot%': 'true',
           library_files: [ 'src/node.js' ],
@@ -97,7 +104,7 @@ test('\ngiven a node.gyp into which node_bar addon was injected previously and a
       , 'injects correct variables leaving out invalid addon without duplicating node_bar_addon'
     )
     t.deepEqual(
-        ret.targets
+        ret.node_gyp.targets
       , [ { target_name: 'node',
             conditions:
               [ [ 'node_baz_addon=="true"',
@@ -140,7 +147,13 @@ test('\ngiven a node.gyp into which node_bar addon was injected previously and a
           { target_name: 'node_etw', type: 'none' } ]
       , 'injects addon conditions only into node target with adjusted paths, leaving out invalid addon and replacing node_bar_addon'
     )
-
+    t.deepEqual(
+        ret.extensions
+      , [ 'node_foo_addon',
+          'node_bar_addon',
+          'node_baz_addon' ] 
+      , 'returns added extensions'
+    )
     t.end()
   }
 })
