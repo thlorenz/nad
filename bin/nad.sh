@@ -61,7 +61,7 @@ main() {
   local cmd="$1"
   shift
   case $cmd in
-    install | fetch | clean | build | restore | info | help )
+    install | fetch | clean | build | restore | info | open | help )
       cmd="nad_$cmd"
       ;;
     * )
@@ -100,6 +100,11 @@ nad_build() {
 nad_restore() {
   log info "Restoring Node.js source to its original state by removing any injections"
   nad_make restore
+}
+
+nad_open() {
+  log info "Opening Node.js Xcode project"
+  nad_make open
 }
 
 nad_info() {

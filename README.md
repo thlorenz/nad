@@ -25,19 +25,19 @@ Node Addon Developer, a tool to inject your addon code into a copy of the node c
 </div>
 <dl>
 <dt>
-<h4 class="name" id="nad::injectNodeExtensions"><span class="type-signature"></span>nad::injectNodeExtensions<span class="signature">(node_extensions_h_file, defines, cb)</span><span class="type-signature"></span></h4>
+<h4 class="name" id="nad::injectNodeExtensions"><span class="type-signature"></span>nad::injectNodeExtensions<span class="signature">(node_extensions_h_file, extensions, cb)</span><span class="type-signature"></span></h4>
 </dt>
 <dd>
 <div class="description">
-<p>Injects source into <code>node_extensions.h</code> file to include <code>NODE_EXT_LIST_ITEM</code> macro calls for all modules of the addon.</p>
+<p>Injects source into <code>node_extensions.h</code> file to include <code>NODE_EXT_LIST_ITEM</code> macro calls for all valid targets of the addon.</p>
 <h4>Example</h4>
-<p>For defines <code>[ 'node_foo_addon', 'node_bar_addon' ]</code> it injects following code:</p>
+<p>For targets <code>[ 'node_foo', 'node_bar' ]</code> it injects following code:</p>
 <pre><code>/* START nad INJECTION, PLEASE DO NOT REMOVE /
 #ifdef NODE_FOO_ADDON
-NODE_EXT_LIST_ITEM(node_bar_addon)
+NODE_EXT_LIST_ITEM(node_bar)
 #endif
 #ifdef NODE_BAR_ADDON
-NODE_EXT_LIST_ITEM(node_bar_addon)
+NODE_EXT_LIST_ITEM(node_bar)
 #endif
 /* END nad INJECTION, PLEASE DO NOT REMOVE /</code></pre>
 </div>
@@ -59,11 +59,11 @@ NODE_EXT_LIST_ITEM(node_bar_addon)
 <td class="description last"><p>full path to <code>node_extensions.h</code></p></td>
 </tr>
 <tr>
-<td class="name"><code>defines</code></td>
+<td class="name"><code>extensions</code></td>
 <td class="type">
 <span class="param-type">Array.&lt;string></span>
 </td>
-<td class="description last"><p>the (uppercased defines) to insert</p></td>
+<td class="description last"><p>the  extensions to insert</p></td>
 </tr>
 <tr>
 <td class="name"><code>cb</code></td>

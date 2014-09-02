@@ -44,9 +44,12 @@ fetch: $(NODE)
 
 node: $(NODE_EXE)
 
+open:
+	@open $(NODE)/node.xcodeproj
+
 restore:
-	cp $(NODE)node.gyp.orig $(NODE)node.gyp && \
-	cp $(NODE)src/node_extensions.h.orig $(NODE)src/node_extensions.h
+	@cp $(NODE)node.gyp.orig $(NODE)node.gyp && \
+	 cp $(NODE)src/node_extensions.h.orig $(NODE)src/node_extensions.h
 
 $(NODE)node.gyp.orig:
 	cp $(NODE)/node.gyp $(NODE)/node.gyp.orig

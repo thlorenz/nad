@@ -77,9 +77,9 @@ test('\ngiven a fresh node.gyp and a binding.gyp with valid foo bar and baz targ
     )
     t.deepEqual(
         ret.extensions
-      , [ 'node_foo_addon',
-          'node_bar_addon',
-          'node_baz_addon' ] 
+      , [ 'node_foo',
+          'node_bar',
+          'node_baz' ] 
       , 'returns added extensions'
     )
 
@@ -149,9 +149,9 @@ test('\ngiven a node.gyp into which node_bar addon was injected previously and a
     )
     t.deepEqual(
         ret.extensions
-      , [ 'node_foo_addon',
-          'node_bar_addon',
-          'node_baz_addon' ] 
+      , [ 'node_foo',
+          'node_bar',
+          'node_baz' ] 
       , 'returns added extensions'
     )
     t.end()

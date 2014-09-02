@@ -16,7 +16,7 @@ test('\ninjecting into original node_extensions.h', function (t) {
   fs.readFile(node_extensions_orig_file, 'utf8', function (err, src) {
     if (err) { t.fail(err); return t.end(); }
     
-    var res = adaptExtensions(src, [ 'NODE_FOO_ADDON', 'NODE_BAR_ADDON' ] )
+    var res = adaptExtensions(src, [ 'node_foo', 'node_bar' ] )
     t.deepEqual(
         res.split('\n')
       , [ 'NODE_EXT_LIST_START',
@@ -44,10 +44,10 @@ test('\ninjecting into original node_extensions.h', function (t) {
           '',
           '/* START nad INJECTION, PLEASE DO NOT REMOVE */',
           '#ifdef NODE_FOO_ADDON',
-          'NODE_EXT_LIST_ITEM(node_foo_addon)',
+          'NODE_EXT_LIST_ITEM(node_foo)',
           '#endif',
           '#ifdef NODE_BAR_ADDON',
-          'NODE_EXT_LIST_ITEM(node_bar_addon)',
+          'NODE_EXT_LIST_ITEM(node_bar)',
           '#endif',
           '/* END nad INJECTION, PLEASE DO NOT REMOVE */',
           '',
@@ -64,7 +64,7 @@ test('\ninjecting into previously modified node_extensions.h NODE_BAR_ADDON was 
   fs.readFile(node_extensions_mod_file, 'utf8', function (err, src) {
     if (err) { t.fail(err); return t.end(); }
     
-    var res = adaptExtensions(src, [ 'NODE_FOO_ADDON', 'NODE_BAR_ADDON' ] )
+    var res = adaptExtensions(src, [ 'node_foo', 'node_bar' ] )
     t.deepEqual(
         res.split('\n')
       , [ 'NODE_EXT_LIST_START',
@@ -91,10 +91,10 @@ test('\ninjecting into previously modified node_extensions.h NODE_BAR_ADDON was 
           '',
           '/* START nad INJECTION, PLEASE DO NOT REMOVE */',
           '#ifdef NODE_FOO_ADDON',
-          'NODE_EXT_LIST_ITEM(node_foo_addon)',
+          'NODE_EXT_LIST_ITEM(node_foo)',
           '#endif',
           '#ifdef NODE_BAR_ADDON',
-          'NODE_EXT_LIST_ITEM(node_bar_addon)',
+          'NODE_EXT_LIST_ITEM(node_bar)',
           '#endif',
           '/* END nad INJECTION, PLEASE DO NOT REMOVE */',
           '',
