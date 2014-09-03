@@ -47,9 +47,11 @@ node: $(NODE_EXE)
 open:
 	@open $(NODE)/node.xcodeproj
 
+## Node.js < 0.11
 restore:
 	@cp $(NODE)node.gyp.orig $(NODE)node.gyp && \
-	 cp $(NODE)src/node_extensions.h.orig $(NODE)src/node_extensions.h
+	 cp $(NODE)src/node_extensions.h.orig $(NODE)src/node_extensions.h && \
+	 cp $(NODE)src/node_extensions.cc.orig $(NODE)src/node_extensions.cc
 
 $(NODE)node.gyp.orig:
 	cp $(NODE)/node.gyp $(NODE)/node.gyp.orig
@@ -57,14 +59,18 @@ $(NODE)node.gyp.orig:
 $(NODE)src/node_extensions.h.orig:
 	cp $(NODE)/src/node_extensions.h $(NODE)/src/node_extensions.h.orig
 
+$(NODE)src/node_extensions.cc.orig:
+	cp $(NODE)/src/node_extensions.cc $(NODE)/src/node_extensions.cc.orig
+
 # We want to always build node by itself first before injecting anything
 # Before we inject anything we force a copy of the original node.gyp and
 # node_extensions.h in order to be able to restore them later
 # (NAD_BIN_DIR set by nad.sh)
-build: $(NODE)node.gyp.orig $(NODE)src/node_extensions.h.orig node 
+build: node $(NODE)node.gyp.orig $(NODE)src/node_extensions.h.orig $(NODE)src/node_extensions.cc.orig
 	node $(NAD_BIN_DIR)/nad-inject.js $(CWD) $(NODE)  && \
 	rm -f $(NODE_EXE) &&                                 \
 	$(MAKE) node 
 
+## end Node.js < 0.11
 
 .PHONY: node fetch info clean_node 
