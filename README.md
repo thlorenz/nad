@@ -8,6 +8,28 @@ Node Addon Developer, a tool to inject your addon code into a copy of the node c
 
     npm install nad
 
+## Caveats
+
+Supports only node `< v0.11` right now since the inject code for `0.11+` will have to be adapted.
+
+Xcode does not properly copy over the `debug-support.cc` into it's `DerivedSources`. So if you get an error similar to:
+
+```
+clang: error: no such file or directory:
+'/Users/thlorenz/Library/Developer/Xcode/DerivedData/node-xxxxx/Build/Products/DerivedSources/Debug/debug-support.cc'
+clang: error: no input files
+Command /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang failed with exit
+code 1k
+```
+
+Fix it via:
+
+```
+cp node-<version>/out/Debug/obj/gen/debug-support.cc ~/Library/Developer/Xcode/DerivedData/node-xxxxx/Build/Products/DerivedSources/Debug/
+```
+
+In the future there nad will fix this automatically for you or at least provide a simple command to perform this step.
+
 ## API
 
 <!-- START docme generated API please keep comment here to allow auto update -->
