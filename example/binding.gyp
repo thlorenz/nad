@@ -1,20 +1,20 @@
 {
   "targets": [
     {
-      'target_name': 'node_slre',
+      'target_name': 'greeter',
       'sources': [ 
-          './src/node_slre.cc',
-          './deps/slre/slre.c',
+          './src/greeter.cc',
+          './deps/greet/greet.c',
         ],
         'include_dirs': [
-          './deps/slre',
+          './deps/greet',
           '<!(node -e "require(\'nan\')")',
       ],
     },
     { 
-      'target_name': 'node_hello',
+      'target_name': 'hello',
       'sources': [ 
-          './src/node_hello.cc',
+          './src/hello.cc',
         ],
         'include_dirs': [
           '<!(node -e "require(\'nan\')")',

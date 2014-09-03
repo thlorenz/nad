@@ -1,5 +1,5 @@
 'use strict';
 
-var binding = require('./resolve-binding')('node_hello');
+var binding = require('nad-bindings')('hello');
 
 console.log('hello', binding.hello());

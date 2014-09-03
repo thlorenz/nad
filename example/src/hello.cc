@@ -12,4 +12,4 @@ void init_hello(v8::Handle<v8::Object> exports) {
   NODE_SET_METHOD(exports, "hello", Hello);
 }
 
-NODE_MODULE(node_hello, init_hello)
+NODE_MODULE(hello, init_hello)
