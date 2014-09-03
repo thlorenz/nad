@@ -1,9 +1,9 @@
 {
   "targets": [
     {
-      'target_name': 'node_foo',
+      'target_name': 'foo',
       'sources': [ 
-          './src/node_foo.cc',
+          './src/foo.cc',
           './deps/foo/foo.c',
         ],
         'include_dirs': [
@@ -12,9 +12,9 @@
       ],
     },
     {
-      'target_name': 'node_bar',
+      'target_name': 'bar',
       'sources': [ 
-          './src/node_bar.cc',
+          './src/bar.cc',
         ],
         'include_dirs': [
           './deps/bar',
@@ -22,22 +22,11 @@
       ],
     },
     { 
-      'target_name': 'node_baz',
+      'target_name': 'baz',
       'sources': [ 
-          './src/node_baz.cc',
+          './src/baz.cc',
         ],
         'include_dirs': [
-          '<!(node -e "require(\'nan\')")',
-      ],
-    },
-    {
-      'target_name': 'invalid_boo',
-      'sources': [ 
-          './src/node_boo.cc',
-          './deps/boo/boo.c',
-        ],
-        'include_dirs': [
-          './deps/boo',
           '<!(node -e "require(\'nan\')")',
       ],
     }

@@ -23,13 +23,15 @@ Node Addon Developer, a tool to inject your addon code into a copy of the node c
 </div>
 <dl>
 <dt>
-<h4 class="name" id="nad::injectNodeExtensions"><span class="type-signature"></span>nad::injectNodeExtensions<span class="signature">(node_extensions_h_file, extensions, cb)</span><span class="type-signature"></span></h4>
+<h4 class="name" id="nad::injectNodeExtensions"><span class="type-signature"></span>nad::injectNodeExtensions<span class="signature">(node_extensions_h_file, node_extensions_cc_file, extensions, cb)</span><span class="type-signature"></span></h4>
 </dt>
 <dd>
 <div class="description">
 <p>Injects source into <code>node_extensions.h</code> file to include <code>NODE_EXT_LIST_ITEM</code> macro calls for all valid targets of the addon.</p>
+<p>This only works for Node.js <code>&lt; v0.11</code> since <code>node_extensions.h</code> and <code>node_extensions.cc</code>
+drastically changed during <code>0.11</code> development until they completely disappeared around <code>v0.11.12</code>.</p>
 <h4>Example</h4>
-<p>For targets <code>[ 'node_foo', 'node_bar' ]</code> it injects following code:</p>
+<p>For targets <code>[ 'node_foo', 'node_bar' ]</code> it injects following code into <code>node_extensions.h</code></p>
 <pre><code>/* START nad INJECTION, PLEASE DO NOT REMOVE /
 #ifdef NODE_FOO_ADDON
 NODE_EXT_LIST_ITEM(node_bar)
@@ -38,6 +40,7 @@ NODE_EXT_LIST_ITEM(node_bar)
 NODE_EXT_LIST_ITEM(node_bar)
 #endif
 /* END nad INJECTION, PLEASE DO NOT REMOVE /</code></pre>
+<p>Then it modifies <code>node_extensions.cc</code> in order to find our addons even if they don't start with <code>node_</code>.</p>
 </div>
 <h5>Parameters:</h5>
 <table class="params">
@@ -55,6 +58,13 @@ NODE_EXT_LIST_ITEM(node_bar)
 <span class="param-type">string</span>
 </td>
 <td class="description last"><p>full path to <code>node_extensions.h</code></p></td>
+</tr>
+<tr>
+<td class="name"><code>node_extensions_cc_file</code></td>
+<td class="type">
+<span class="param-type">string</span>
+</td>
+<td class="description last"><p>full path to <code>node_extensions.cc</code></p></td>
 </tr>
 <tr>
 <td class="name"><code>extensions</code></td>
@@ -78,7 +88,7 @@ NODE_EXT_LIST_ITEM(node_bar)
 <li>
 <a href="https://github.com/thlorenz/nad/blob/master/lib/inject-node_extensions_h.js">inject-node_extensions_h.js</a>
 <span>, </span>
-<a href="https://github.com/thlorenz/nad/blob/master/lib/inject-node_extensions_h.js#L9">lineno 9</a>
+<a href="https://github.com/thlorenz/nad/blob/master/lib/inject-node_extensions_h.js#L10">lineno 10</a>
 </li>
 </ul></dd>
 </dl>

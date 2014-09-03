@@ -3,7 +3,7 @@
   'variables': {
     'v8_use_snapshot%': 'true',
     'node_shared_openssl%': 'false',
-    'node_bar_addon%': 'true',
+    'bar_addon%': 'true',
     'library_files': [
       'src/node.js',
     ],
@@ -34,11 +34,11 @@
       ],
 
       'conditions': [
-        ['node_bar_addon=="true"', {
-          'target_name': 'node_bar',
+        ['bar_addon=="true"', {
+          'target_name': 'bar',
           'sources': [ 
               # this file was renamed and should be changed if condition is properly replaced
-              './src/node_bar_previous.cc',
+              './src/bar_previous.cc',
             ],
             'include_dirs': [
               './deps/bar',

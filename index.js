@@ -8,8 +8,10 @@ exports.inject = function inject(projectDir, nodeDir, cb) {
   injectNodeGyp(projectDir, nodeDir, onnodegyped);
   function onnodegyped(err, res) {
     if (err) return cb(err);
-    var node_extensions_h_file = path.join(nodeDir, 'src', 'node_extensions.h');
-    injectNodeExtensions(node_extensions_h_file, res.extensions, cb)
+    var node_extensions_h_file = path.join(nodeDir, 'src', 'node_extensions.h')
+      , node_extensions_cc_file = path.join(nodeDir, 'src', 'node_extensions.cc');
+
+    injectNodeExtensions(node_extensions_h_file, node_extensions_cc_file, res.extensions, cb)
   }
 }
 
