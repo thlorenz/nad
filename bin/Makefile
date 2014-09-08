@@ -28,10 +28,12 @@ info:
 $(NODE): 
 	(cd $(ROOT) && curl -L $(NODE_URL) | tar xvf -)
 
-$(NODE_EXE): $(NODE)
+node_configure: $(NODE)
 	cd $(NODE) &&                                     \
-	./configure --debug --xcode --without-snapshot && \
-	cat config.mk &&                                  \
+	./configure --debug --xcode --without-snapshot
+
+$(NODE_EXE): node_configure
+	cd $(NODE) && \
 	CC=$(CC) CXX=$(CXX) $(MAKE) -j$(CPUS) out/Makefile node_g 
 
 rebuild:
