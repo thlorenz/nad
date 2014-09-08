@@ -39,7 +39,7 @@ esac
 
 write_default_config() {
   if [ -z "$NODE_VERSION" ]; then
-    NODE_VERSION=`node -e 'console.log(process.version)'`
+    NODE_VERSION=`node -e 'console.log(process.version.slice(1))'`
   fi
   echo "NODE_VERSION?=$NODE_VERSION
 CC?=clang
@@ -48,6 +48,11 @@ LINK?=clang++" > $config_mk
 }
 
 main() {
+
+  if [ ! -f $CWD/binding.byp ]; then
+    log error "Couldn't find binding.gyp in current directory."
+    exit 1
+  fi
 
   if [ -f $config_mk ]; then
     log info "Using the following settings ('nad configure' can override them)"

@@ -1,11 +1,10 @@
 # CWD set by nad.sh
 include $(CWD)/.nadconfig.mk
 
-NODE_VERSION_NUM=$(subst v,,$(NODE_VERSION))
-NODE_URL=https://github.com/joyent/node/archive/$(NODE_VERSION).tar.gz
+NODE_URL=https://github.com/joyent/node/archive/v$(NODE_VERSION).tar.gz
 
 ROOT 		 		 := $(CWD)/
-NODE      		= $(ROOT)node-$(NODE_VERSION_NUM)/
+NODE      		= $(ROOT)node-$(NODE_VERSION)/
 NODE_EXE  		= $(NODE)node_g
 
 uname_S=$(shell uname -s)
@@ -23,7 +22,6 @@ info:
 	@echo CURDIR $(CURDIR)
 	@echo NODE_URL $(NODE_URL)
 	@echo NODE_VERSION $(NODE_VERSION)
-	@echo NODE_VERSION_NUM $(NODE_VERSION_NUM)
 
 $(NODE): 
 	(cd $(ROOT) && curl -L $(NODE_URL) | tar xvf -)
