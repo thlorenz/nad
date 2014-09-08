@@ -1,0 +1,22 @@
+usage: nad configure <options> 
+
+  Overrides configuration options for building your node addon project.
+
+
+OPTIONS:
+
+  -h, --help      Print this help message.
+  --cc            C compiler to use (default: clang)
+  --cxx           C++ compiler to use (default: clang++)
+  --link          Linker to use (default: clang++)
+  --target        Node.js version into which to inject the addon (default: version of node in path)
+  --nodedir       Directory that contains source code of Node.js into which to inject the addon (overrides target) (default: ./node-<target>)
+
+EXAMPLES:
+
+  # Fetch and compile Node.js v0.10.31 with gcc, link with ld
+  nad configure --cc gcc --cxx gcc --link ld --target 0.10.31
+
+  # Use the Node.js installation we cloned locally
+  nad configure --nodedir ../node
+

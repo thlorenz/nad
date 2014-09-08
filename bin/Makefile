@@ -1,11 +1,11 @@
 # CWD set by nad.sh
 include $(CWD)/.nadconfig.mk
 
-NODE_URL=https://github.com/joyent/node/archive/v$(NODE_VERSION).tar.gz
+NODE_URL=https://github.com/joyent/node/archive/v$(TARGET).tar.gz
 
-ROOT 		 		 := $(CWD)/
-NODE      		= $(ROOT)node-$(NODE_VERSION)/
-NODE_EXE  		= $(NODE)node_g
+ROOT 		 := $(CWD)/
+NODEDIR  := $(CWD)/$(NODEDIR)/
+NODE_EXE = $(NODEDIR)/out/Debug/node_g
 
 uname_S=$(shell uname -s)
 
@@ -21,55 +21,56 @@ endif
 info: 
 	@echo CURDIR $(CURDIR)
 	@echo NODE_URL $(NODE_URL)
-	@echo NODE_VERSION $(NODE_VERSION)
+	@echo TARGET $(TARGET)
 
-$(NODE): 
+$(NODEDIR): 
 	(cd $(ROOT) && curl -L $(NODE_URL) | tar xvf -)
 
-node_configure: $(NODE)
-	cd $(NODE) &&                                     \
+node_configure: $(NODEDIR)
+	cd $(NODEDIR) && \
 	./configure --debug --xcode --without-snapshot
 
 $(NODE_EXE): node_configure
-	cd $(NODE) && \
+	cd $(NODEDIR) && \
 	CC=$(CC) CXX=$(CXX) $(MAKE) -j$(CPUS) out/Makefile node_g 
+
+node: $(NODE_EXE)
 
 rebuild:
 	rm -rf $(NODE_EXE) && $(MAKE) node
 
 clean_node:
-	(cd  $(NODE) && $(MAKE) clean)
+	(cd  $(NODEDIR) && $(MAKE) clean)
 
-fetch: $(NODE)
+fetch: $(NODEDIR)
 
-node: $(NODE_EXE)
 
 open:
-	@open $(NODE)/node.xcodeproj
+	@open $(NODEDIR)/node.xcodeproj
 
 ## Node.js < 0.11
 restore:
-	@cp $(NODE)node.gyp.orig $(NODE)node.gyp && \
-	 cp $(NODE)src/node_extensions.h.orig $(NODE)src/node_extensions.h && \
-	 cp $(NODE)src/node_extensions.cc.orig $(NODE)src/node_extensions.cc
+	@cp $(NODEDIR)node.gyp.orig $(NODEDIR)node.gyp && \
+	 cp $(NODEDIR)src/node_extensions.h.orig $(NODEDIR)src/node_extensions.h && \
+	 cp $(NODEDIR)src/node_extensions.cc.orig $(NODEDIR)src/node_extensions.cc
 
-$(NODE)node.gyp.orig:
-	cp $(NODE)/node.gyp $(NODE)/node.gyp.orig
+$(NODEDIR)node.gyp.orig:
+	cp $(NODEDIR)/node.gyp $(NODEDIR)/node.gyp.orig
 
-$(NODE)src/node_extensions.h.orig:
-	cp $(NODE)/src/node_extensions.h $(NODE)/src/node_extensions.h.orig
+$(NODEDIR)src/node_extensions.h.orig:
+	cp $(NODEDIR)/src/node_extensions.h $(NODEDIR)/src/node_extensions.h.orig
 
-$(NODE)src/node_extensions.cc.orig:
-	cp $(NODE)/src/node_extensions.cc $(NODE)/src/node_extensions.cc.orig
+$(NODEDIR)src/node_extensions.cc.orig:
+	cp $(NODEDIR)/src/node_extensions.cc $(NODEDIR)/src/node_extensions.cc.orig
 
 # We want to always build node by itself first before injecting anything
 # Before we inject anything we force a copy of the original node.gyp and
 # node_extensions.h in order to be able to restore them later
 # (NAD_BIN_DIR set by nad.sh)
-build: node $(NODE)node.gyp.orig $(NODE)src/node_extensions.h.orig $(NODE)src/node_extensions.cc.orig
-	node $(NAD_BIN_DIR)/nad-inject.js $(CWD) $(NODE)  && \
+build: node $(NODEDIR)node.gyp.orig $(NODEDIR)src/node_extensions.h.orig $(NODEDIR)src/node_extensions.cc.orig
+	node $(NAD_BIN_DIR)/nad-inject.js $(CWD) $(NODEDIR)  && \
 	rm -f $(NODE_EXE) &&                                 \
-	$(MAKE) node 
+	$(MAKE) $(NODE_EXE) 
 
 ## end Node.js < 0.11
 

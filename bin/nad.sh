@@ -37,36 +37,24 @@ case "$shell" in
     ;;
 esac
 
-write_default_config() {
-  if [ -z "$NODE_VERSION" ]; then
-    NODE_VERSION=`node -e 'console.log(process.version.slice(1))'`
-  fi
-  echo "NODE_VERSION?=$NODE_VERSION
-CC?=clang
-CXX?=clang++
-LINK?=clang++" > $config_mk
-}
-
 main() {
 
-  if [ ! -f $CWD/binding.byp ]; then
+  if [ ! -f $CWD/binding.gyp ]; then
     log error "Couldn't find binding.gyp in current directory."
     exit 1
   fi
 
-  if [ -f $config_mk ]; then
-    log info "Using the following settings ('nad configure' can override them)"
-    cat $config_mk 
-  else
+  if [ ! -f $config_mk ]; then
     log info "Couldn't find $config_mk, creating default"
     log info "Run 'nad configure' to override these settings"
-    write_default_config
+    nad_configure
   fi
 
   local cmd="$1"
   shift
   case $cmd in
-    install | fetch | clean | build | restore | info | open | help )
+    configure | install | fetch | clean |  \
+    build | restore | info | open | help )
       cmd="nad_$cmd"
       ;;
     * )
@@ -85,6 +73,12 @@ main() {
 
 nad_make() {
   NAD_BIN_DIR=$NAD_BIN_DIR CWD=$CWD make -C $NAD_BIN_DIR $1
+}
+
+nad_configure() {
+  node $NAD_BIN_DIR/configure.js "$@"
+  log info "Current config: "
+  cat $config_mk
 }
 
 nad_fetch() {
