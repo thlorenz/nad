@@ -17,7 +17,7 @@ function log() {
     warn) color='\e[1;33m' ;;
   esac
 
-  echo -e "nad ${color}$c${nc} $s"
+  echo -e "${color}$c${nc} \e[0;35mnad\e[0m $s"
 }
 
 if [ -z "$BASH" ]; then
@@ -97,7 +97,6 @@ nad_build() {
 }
 
 nad_restore() {
-  log info "Restoring Node.js source to its original state by removing any injections"
   nad_make restore
 }
 
