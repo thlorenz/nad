@@ -76,9 +76,7 @@ nad_make() {
 }
 
 nad_configure() {
-  node $NAD_BIN_DIR/configure.js "$@"
-  log info "Current config: "
-  cat $config_mk
+  node $NAD_BIN_DIR/nad-configure.js "$@"
 }
 
 nad_fetch() {

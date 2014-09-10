@@ -9,7 +9,7 @@ var log      = require('npmlog')
   ;
 
 function usage() {
-  var usageFile = path.join(__dirname, 'configure-usage.txt');
+  var usageFile = path.join(__dirname, 'nad-configure-usage.txt');
   fs.createReadStream(usageFile).pipe(process.stdout);
   return;
 }
@@ -39,4 +39,8 @@ var config =
       return k.toUpperCase() + '?=' + opts[k]
     }).join('\n')
 
-fs.writeFileSync(path.join(process.cwd(), '.nadconfig.mk'), config);
+var nadconfig_mk = path.join(process.cwd(), '.nadconfig.mk');
+fs.writeFileSync(nadconfig_mk, config);
+
+log.info('nad', 'Current config:')
+fs.createReadStream(nadconfig_mk).pipe(process.stdout)
