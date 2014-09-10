@@ -10,7 +10,7 @@ Node Addon Developer, a tool to inject your addon code into a copy of the node c
 
 ## Caveats
 
-Supports only node `< v0.11` right now since the inject code for `0.11+` will have to be adapted.
+Supports only node `< v0.11` right now due to changes in module loading in `0.11+`. Support for `>= 0.11` is under way.
 
 Xcode does not properly copy over the `debug-support.cc` into it's `DerivedSources`. So if you get an error similar to:
 
