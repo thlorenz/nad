@@ -15,6 +15,7 @@
   "dependencies": {
     "gyp-reader": "0.0.2",
     "minimist": "~1.1.0",
+    "mkdirp": "~0.5.0",
     "npmlog": "~0.1.1",
     "semver": "~3.0.1",
     "update-section": "~0.3.3",

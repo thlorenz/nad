@@ -1,31 +1,14 @@
 'use strict';
 
-var injectNodeGyp = require('./lib/inject-node_gyp')
+var injectNodeGyp        = require('./lib/inject-node_gyp')
   , injectNodeExtensions = require('./lib/inject-node_extensions')
-  , path = require('path')
-  , fs = require('fs')
-  , semver = require('semver')
-  , node_0_10 = semver.Range('>= 0.10.0 < 0.11')
+  , path                 = require('path')
+  , fs                   = require('fs')
+  , copyFileSync         = require('./lib/copy-file-sync')
+  , semver               = require('semver')
+
+var node_0_10 = semver.Range('>= 0.10.0 < 0.11')
   , node_greater_0_10 = semver.Range('>= 0.11.13')
-
-function copyFileSync(srcFile, destFile) {
-  var BUF_LENGTH = 64 * 1024
-  var buf = new Buffer(BUF_LENGTH)
-
-  var fdr       = fs.openSync(srcFile, 'r')
-    , stat      = fs.fstatSync(fdr)
-    , fdw       = fs.openSync(destFile, 'w', stat.mode)
-    , bytesRead = 1
-    , pos       = 0
-
-  while (bytesRead > 0) {
-    bytesRead = fs.readSync(fdr, buf, 0, BUF_LENGTH, pos);
-    fs.writeSync(fdw, buf, 0, bytesRead);
-    pos += bytesRead;
-  }
-  fs.closeSync(fdr);
-  return fs.closeSync(fdw);
-}
 
 function getFiles(nodeDir) {
   return  { node_gyp_file           : path.join(nodeDir, 'node.gyp')

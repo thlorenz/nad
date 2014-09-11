@@ -55,4 +55,8 @@ rebuild:
 restore:
 	@node $(NAD_BIN_DIR)/nad-restore.js $(TARGET) $(NODEDIR)
 
-.PHONY: node fetch info restore clean_node 
+fix_xcode:
+	@cp $(NODEDIR)out/Debug/obj/gen/debug-support.cc \
+		$(HOME)/Library/Developer/Xcode/DerivedData/node-$(NODE_PROJECT_HASH)/Build/Products/DerivedSources/Debug/
+
+.PHONY: node fetch info restore clean_node fix_xcode
