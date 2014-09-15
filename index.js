@@ -1,14 +1,14 @@
 'use strict';
 
-var injectNodeGyp        = require('./lib/inject-node_gyp')
-  , injectNodeExtensions = require('./lib/inject-node_extensions')
-  , path                 = require('path')
+var path                 = require('path')
   , fs                   = require('fs')
-  , copyFileSync         = require('./lib/copy-file-sync')
   , semver               = require('semver')
+  , injectNodeGyp        = require('./lib/inject-node_gyp')
+  , injectNodeExtensions = require('./lib/inject-node_extensions')
+  , copyFileSync         = require('./lib/copy-file-sync')
 
-var node_0_10 = semver.Range('>= 0.10.0 < 0.11')
-  , node_greater_0_10 = semver.Range('>= 0.11.13')
+var node_0_10         = semver.Range('> = 0.10.0 < 0.11')
+  , node_greater_0_10 = semver.Range('> = 0.11.13')
 
 function getFiles(nodeDir) {
   return  { node_gyp_file           : path.join(nodeDir, 'node.gyp')
@@ -21,8 +21,8 @@ function backup(file) {
   if (!fs.existsSync(copy)) copyFileSync(file, copy);
 }
 
-function restore(copy) {
-  var file = copy.slice(0, -'.orig'.length);
+function restore(file) {
+  var copy = file + '.orig'
   if (fs.existsSync(copy)) copyFileSync(copy, file);
 }
 
