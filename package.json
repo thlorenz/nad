@@ -3,6 +3,9 @@
   "version": "0.0.1",
   "description": "Node Addon Developer, a tool to inject your addon code into a copy of the node codebase in order to integrate with IDEs and debuggers easily.",
   "main": "index.js",
+  "bin": {
+    "nad": "./bin/nad.sh"
+  },
   "scripts": {
     "docme": "docme README.md -- --configure .jsdocrc",
     "test": "set -e; for t in test/*.js; do node $t; done"
