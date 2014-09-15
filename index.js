@@ -7,8 +7,8 @@ var path                 = require('path')
   , injectNodeExtensions = require('./lib/inject-node_extensions')
   , copyFileSync         = require('./lib/copy-file-sync')
 
-var node_0_10         = semver.Range('> = 0.10.0 < 0.11')
-  , node_greater_0_10 = semver.Range('> = 0.11.13')
+var node_0_10         = semver.Range('>= 0.10.0 < 0.11')
+  , node_greater_0_10 = semver.Range('>= 0.11.13')
 
 function getFiles(nodeDir) {
   return  { node_gyp_file           : path.join(nodeDir, 'node.gyp')
