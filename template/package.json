@@ -1,0 +1,23 @@
+{
+  "name": "{{ name }}",
+  "version": "0.0.0",
+  "description": "{{ name }} Node.js addon",
+  "main": "{{ name }}.js",
+  "repository": {
+  },
+  "homepage": "",
+  "dependencies": {
+    "nad-bindings": "~0.1.0",
+    "nan": "~1.3.0"
+  },
+  "devDependencies": {
+  },
+  "keywords": [],
+  "author": {
+  },
+  "license": {
+  },
+  "engine": {
+    "node": ">=0.10"
+  }
+}
