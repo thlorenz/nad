@@ -28,6 +28,9 @@ var opts = xtend({
   , target : process.versions.node
 }, argv)
 
+// Ensure version doesn't include 'v', i.e. turn 'v0.10.31' into '0.10.31' 
+if (opts.target[0] === 'v') opts.target = opts.target.slice(1);
+
 opts.nodedir = argv.nodedir 
   ? path.relative(process.cwd(),  argv.nodedir)
   : path.relative(process.cwd(), 'node-' + opts.target)
