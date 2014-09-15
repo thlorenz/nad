@@ -45,12 +45,13 @@ function addToProject(args) {
     .replace(/{{ *orig_name *}}/g, orig_name)
 
   fs.writeFileSync(path.join(project_dir, tgt), code, 'utf8');
-  var opts = { cwd: path.join(process.cwd(), orig_name), stdio: 'inherit' };
-  var install = yawn('npm', [ 'install' ], opts, function (err) {
-    if (err) log.error('nad', err);
-       
-    log.info('nad', 'Your project is ready to go');
-    log.info('nad', 'Run "node ' + orig_name + '" to test it');
-    log.info('nad', 'Run "nad build && nad build" to generate a nad project and open it in an IDE');
-  })
 }
+
+var opts = { cwd: path.join(process.cwd(), orig_name), stdio: 'inherit' };
+var install = yawn('npm', [ 'install' ], opts, function (err) {
+  if (err) return log.error('nad', err);
+
+  log.info('nad', 'Your project is ready to go');
+  log.info('nad', 'Run "node ' + orig_name + '" to test it');
+  log.info('nad', 'Run "nad build && nad build" to generate a nad project and open it in an IDE');
+})
