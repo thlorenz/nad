@@ -6,7 +6,78 @@ Node Addon Developer, a tool to inject your addon code into a copy of the node c
 
 ## Installation
 
-    npm install nad
+    npm install -g nad
+
+## Getting Started
+
+```sh
+nad init my-addon
+cd my-addon
+
+## Try the node-gyp build
+node ./my-addon.js
+
+## Generate Xcode project and open it (nad build runs nad configure automatically with defaults)
+nad build
+nad open
+
+## Select node target in Xcode and try to build if it fails see ## Caveats and nad fix
+```
+
+## CLI
+
+### nad init
+
+Initializes nad project in current dir, i.e. `nad init my-addon`
+
+### nad configure
+
+```
+usage: nad configure <options> 
+
+  Overrides configuration options for building your node addon project.
+
+OPTIONS:
+
+  -h, --help      Print this help message.
+  --cc            C compiler to use (default: clang)
+  --cxx           C++ compiler to use (default: clang++)
+  --link          Linker to use (default: clang++)
+  --target        Node.js version into which to inject the addon (default: version of node in path)
+  --nodedir       Directory that contains source code of Node.js into which to inject the addon (overrides target) (default: ./node-<target>)
+
+EXAMPLES:
+
+  # Fetch and compile Node.js v0.10.31 with gcc, link with ld
+  nad configure --cc gcc --cxx gcc --link ld --target 0.10.31
+
+  # Use the Node.js installation we cloned locally
+  nad configure --nodedir ../node
+```
+
+### nad build
+
+Injects project in current folder into Node.js build and rebuilds it.
+
+### nad open
+
+Opens the Xcode project for the addon in the current folder.
+
+### nad fetch
+
+Fetches source for configured Node.js version.
+
+### nad inject
+
+Injects project in current folder into Node.js build.
+
+### nad restore
+
+Restores Node.js build to its original state by removing the addon project that was injected previously.
+
+### nad help
+
+Prints help about `nad configure`
 
 ## Caveats
 
@@ -22,13 +93,19 @@ Command /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoo
 code 1k
 ```
 
-Fix it via:
+### nad fix
+
+If the error is as follows (`1234` being the project hash):
 
 ```
-cp node-<version>/out/Debug/obj/gen/debug-support.cc ~/Library/Developer/Xcode/DerivedData/node-xxxxx/Build/Products/DerivedSources/Debug/
+'/Users/thlorenz/Library/Developer/Xcode/DerivedData/node-1234/Build/Products/DerivedSources/Debug/debug-support.cc' ...
 ```
 
-In the future there nad will fix this automatically for you or at least provide a simple command to perform this step.
+Fix it via :
+
+```
+nad fix 1234
+```
 
 ## API
 
@@ -50,8 +127,9 @@ In the future there nad will fix this automatically for you or at least provide 
 <dd>
 <div class="description">
 <p>Injects source into <code>node_extensions.h</code> file to include <code>NODE_EXT_LIST_ITEM</code> macro calls for all valid targets of the addon.</p>
-<p>This only works for Node.js <code>&lt; v0.11</code> since <code>node_extensions.h</code> and <code>node_extensions.cc</code>
-drastically changed during <code>0.11</code> development until they completely disappeared around <code>v0.11.12</code>.</p>
+<p>This is only necessary for Node.js <code>&lt; v0.11</code> since <code>node_extensions.h</code> and <code>node_extensions.cc</code>
+drastically changed during <code>0.11</code> development until they completely disappeared around <code>v0.11.12</code>.
+Starting with <code>v0.11.13</code> an addon module can be loaded dynamically even if it is not registered in the source code.</p>
 <h4>Example</h4>
 <p>For targets <code>[ 'node_foo', 'node_bar' ]</code> it injects following code into <code>node_extensions.h</code></p>
 <pre><code>/* START nad INJECTION, PLEASE DO NOT REMOVE /
@@ -108,9 +186,9 @@ NODE_EXT_LIST_ITEM(node_bar)
 <dt class="tag-source">Source:</dt>
 <dd class="tag-source"><ul class="dummy">
 <li>
-<a href="https://github.com/thlorenz/nad/blob/master/lib/inject-node_extensions_h.js">inject-node_extensions_h.js</a>
+<a href="https://github.com/thlorenz/nad/blob/master/inject-node_extensions.js">inject-node_extensions.js</a>
 <span>, </span>
-<a href="https://github.com/thlorenz/nad/blob/master/lib/inject-node_extensions_h.js#L10">lineno 10</a>
+<a href="https://github.com/thlorenz/nad/blob/master/inject-node_extensions.js#L10">lineno 10</a>
 </li>
 </ul></dd>
 </dl>
@@ -160,9 +238,9 @@ in the node build.</p>
 <dt class="tag-source">Source:</dt>
 <dd class="tag-source"><ul class="dummy">
 <li>
-<a href="https://github.com/thlorenz/nad/blob/master/lib/inject-node_gyp.js">inject-node_gyp.js</a>
+<a href="https://github.com/thlorenz/nad/blob/master/inject-node_gyp.js">inject-node_gyp.js</a>
 <span>, </span>
-<a href="https://github.com/thlorenz/nad/blob/master/lib/inject-node_gyp.js#L13">lineno 13</a>
+<a href="https://github.com/thlorenz/nad/blob/master/inject-node_gyp.js#L13">lineno 13</a>
 </li>
 </ul></dd>
 </dl>
