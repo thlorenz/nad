@@ -1,6 +1,6 @@
 {
   "name": "nad",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Node Addon Developer, a tool to inject your addon code into a copy of the node codebase in order to integrate with IDEs and debuggers easily.",
   "main": "index.js",
   "bin": {
