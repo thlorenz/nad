@@ -16,13 +16,14 @@ function log() {
   local c=$1
   local s=$2
 
-  nc='\e[0m'
+  nc='\033[0m'
 
   case $c in
-    verb) color='\e[0;34m' ;;
-    info) color='\e[0;32m' ;;
-    err)  color='\e[0;31m' ;;
-    warn) color='\e[1;33m' ;;
+
+    verb) color='\033[0;34m' ;;
+    info) color='\033[0;32m' ;;
+    err)  color='\033[0;31m' ;;
+    warn) color='\033[1;33m' ;;
   esac
 
   echo -e "${color}$c${nc} \e[0;35mnad\e[0m $s"
