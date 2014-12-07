@@ -41,6 +41,9 @@ clean_node:
 
 fetch: $(NODEDIR)
 
+inject: $(NODEDIR)
+	@node $(NAD_BIN_DIR)/nad-inject.js $(TARGET) $(CWD) $(NODEDIR)
+
 open:
 	@open $(NODEDIR)node.xcodeproj
 

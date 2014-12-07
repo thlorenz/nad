@@ -51,7 +51,7 @@ main() {
   local cmd="$1"
   shift
   case $cmd in
-    init | configure | install | fetch | clean |  \
+    init | configure | install | fetch | inject | clean |  \
     build | restore | info | open | fix | help )
       cmd="nad_$cmd"
       ;;
@@ -102,6 +102,13 @@ nad_fetch() {
   ensure_nadconfig_mk
   log info "Fetching Node.js source"
   nad_make fetch
+}
+
+nad_inject() {
+  ensure_binding_gyp
+  ensure_nadconfig_mk
+  log info "Injecting code into Node.js source"
+  nad_make inject
 }
 
 nad_install() {
