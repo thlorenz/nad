@@ -2,21 +2,36 @@ usage: nad configure <options>
 
   Overrides configuration options for building your node addon project.
 
-
 OPTIONS:
 
   -h, --help      Print this help message.
   --cc            C compiler to use (default: clang)
   --cxx           C++ compiler to use (default: clang++)
   --link          Linker to use (default: clang++)
-  --target        Node.js version into which to inject the addon (default: version of node in path)
-  --nodedir       Directory that contains source code of Node.js into which to inject the addon (overrides target) (default: ./node-<target>)
+  --target        node version into which to inject the addon (default: version of node in path or --nodedir)
+  --nodedir       Directory that contains source code of node into which to inject the addon (overrides target) (default: ./node-<target>)
+  --nodename      Name of the node you are using, defaults to iojs.
+
+Once `nad configure` ran successfully use `nad build` to build with your addon.
 
 EXAMPLES:
 
-  # Fetch and compile Node.js v0.10.31 with gcc, link with ld
+  # Fetch and compile node v0.10.31 with gcc, link with ld
   nad configure --cc gcc --cxx gcc --link ld --target 0.10.31
 
-  # Use the Node.js installation we cloned locally
-  nad configure --nodedir ../node
+  # Use the node installation we cloned locally
+  nad configure --nodedir ../iojs
 
+MORE nad COMMANDS
+
+  nad build   - Injects project in current folder into node build and rebuilds it.
+
+  nad open    - Opens the Xcode project for the addon in the current folder.
+
+  nad fetch   - Fetches source for configured node version.
+
+  nad inject  - Injects project in current folder into Node.js build.
+
+  nad restore - Restores Node.js build to its original state by removing the addon project that was injected previously.
+
+  nad help    - Prints help about `nad configure`

@@ -1,17 +1,21 @@
 # CWD set by nad.sh
 include $(CWD)/.nadconfig.mk
 
-NODE_URL=https://github.com/joyent/node/archive/v$(TARGET).tar.gz
+ifeq ($(NODENAME), 'io.js')
+	NODE_URL=https://github.com/joyent/node/archive/v$(TARGET).tar.gz
+else
+	NODE_URL=https://github.com/iojs/io.js/archive/v$(TARGET).tar.gz
+endif
 
 ROOT 		 := $(CWD)/
 NODEDIR  := $(CWD)/$(NODEDIR)/
-NODE_EXE = $(NODEDIR)/out/Debug/node_g
+NODE_EXE = $(NODEDIR)/out/Debug/$(NODENAME)
 
 uname_S=$(shell uname -s)
 
 CPUS ?= 1
 ifeq (Darwin, $(uname_S))
-	CPUS=$(shell sysctl hw.availcpu | sed -e 's/hw.availcpu = //')
+	CPUS=$(shell sysctl hw.ncpu | sed -e 's/hw.ncpu: //')
 endif
 
 ifeq (Linux, $(uname_S))
@@ -30,9 +34,17 @@ node_configure: $(NODEDIR)
 	cd $(NODEDIR) && \
 	./configure --debug --xcode --without-snapshot
 
+ifeq ($(USE_MAKE),1)
 $(NODE_EXE): node_configure
-	cd $(NODEDIR) && \
-	CC=$(CC) CXX=$(CXX) $(MAKE) -j$(CPUS) out/Makefile node_g 
+	cd $(NODEDIR)                                     && \
+  CC=$(CC) CXX=$(CXX) $(MAKE) -j$(CPUS) $(NODE_EXE)
+else 
+$(NODE_EXE): node_configure
+	cd $(NODEDIR)                          && \
+	tools/gyp_node.py -f ninja             && \
+	CC=$(CC) CXX=$(CXX) ninja -C out/Debug && \
+	ln -fs out/Debug/$(NODENAME) $(NODE_EXE) 
+endif
 
 node: $(NODE_EXE)
 

@@ -43,21 +43,25 @@ OPTIONS:
   --cc            C compiler to use (default: clang)
   --cxx           C++ compiler to use (default: clang++)
   --link          Linker to use (default: clang++)
-  --target        Node.js version into which to inject the addon (default: version of node in path)
-  --nodedir       Directory that contains source code of Node.js into which to inject the addon (overrides target) (default: ./node-<target>)
+  --target        node version into which to inject the addon (default: version of node in path or --nodedir)
+  --nodedir       Directory that contains source code of node into which to inject the addon (overrides target) (default: ./node-<target>)
+  --nodename      Name of the node you are using, defaults to iojs.
+
+Once `nad configure` ran successfully use `nad build` to build with your addon.
 
 EXAMPLES:
 
-  # Fetch and compile Node.js v0.10.31 with gcc, link with ld
+  # Fetch and compile node v0.10.31 with gcc, link with ld
   nad configure --cc gcc --cxx gcc --link ld --target 0.10.31
 
-  # Use the Node.js installation we cloned locally
+  # Use the node installation we cloned locally
   nad configure --nodedir ../node
+
 ```
 
 ### nad build
 
-Injects project in current folder into Node.js build and rebuilds it.
+Injects project in current folder into node build and rebuilds it.
 
 ### nad open
 
@@ -65,24 +69,23 @@ Opens the Xcode project for the addon in the current folder.
 
 ### nad fetch
 
-Fetches source for configured Node.js version.
+Fetches source for configured node version.
 
 ### nad inject
 
-Injects project in current folder into Node.js build.
+Injects project in current folder into node build.
 
 ### nad restore
 
-Restores Node.js build to its original state by removing the addon project that was injected previously.
+Restores node build to its original state by removing the addon project that was injected previously.
 
 ### nad help
 
 Prints help about `nad configure`
 
-## Caveats
+## Caveats 
 
-Supports only node `< v0.11` right now due to changes in module loading in `0.11+`. Support for `>= 0.11` is under way.
-
+For `node<v0.12` you may get an error when running with Xcode
 Xcode does not properly copy over the `debug-support.cc` into it's `DerivedSources`. So if you get an error similar to:
 
 ```
@@ -127,7 +130,7 @@ nad fix 1234
 <dd>
 <div class="description">
 <p>Injects source into <code>node_extensions.h</code> file to include <code>NODE_EXT_LIST_ITEM</code> macro calls for all valid targets of the addon.</p>
-<p>This is only necessary for Node.js <code>&lt; v0.11</code> since <code>node_extensions.h</code> and <code>node_extensions.cc</code>
+<p>This is only necessary for node <code>&lt; v0.11</code> since <code>node_extensions.h</code> and <code>node_extensions.cc</code>
 drastically changed during <code>0.11</code> development until they completely disappeared around <code>v0.11.12</code>.
 Starting with <code>v0.11.13</code> an addon module can be loaded dynamically even if it is not registered in the source code.</p>
 <h4>Example</h4>
