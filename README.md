@@ -18,11 +18,30 @@ cd my-addon
 node ./my-addon.js
 
 ## Generate Xcode project and open it (nad build runs nad configure automatically with defaults)
-## By default nad builds with Ninja (brew install ninja). Run "nad configure --make" build with Make instead.
+## By default nad builds with Ninja (brew install ninja). Run "nad configure --make" to build with Make instead.
 nad build
 nad open
 
 ## Select node target in Xcode and try to build if it fails see ## Caveats and nad fix
+```
+
+## Changes To Your Code
+
+- nad uses your `binding.gyp` file to determine what to inject into the node build
+- however in order for the binding resolution to work when you run it as an addon as well as when you run it from within
+  node, do the following
+
+Install nad-bindings:
+
+```sh
+npm install -S nad-bindings
+```
+
+Replace binding resolution in your addon. As an example here is the diff for `leveldown`:
+
+```diff
+-    , binding           = require('bindings')('leveldown.node').leveldown
++    , binding           = require('nad-bindings')('leveldown').leveldown
 ```
 
 ## CLI
