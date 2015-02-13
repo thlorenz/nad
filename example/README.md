@@ -1,6 +1,6 @@
 # nad example
 
-This is a simple example to show how to generate a Node.js project that includes given addon code.
+This is a simple example to show how to generate a node project that includes given addon code.
 
 The `binding.gyp` declares two targets, `hello` and `greet`. 
 
@@ -19,4 +19,4 @@ At this point you should have an Xcode project open up which you can build and r
 
 ## Test It
 
-You can then run `hello.js` or `greeter.js` with the Node.js app open in Xcode and debug through the C++ code. 
+You can then run `hello.js` or `greeter.js` with the node app open in Xcode and debug through the C++ code. 

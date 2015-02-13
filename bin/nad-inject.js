@@ -6,7 +6,7 @@ var log = require('npmlog')
 var nad = require('../')
 log.level = process.env.LOGLEVEL || 'info';
 
-log.info('nad', 'Injecting addon in current dir into installed Node.js');
+log.info('nad', 'Injecting addon in current dir into installed node');
 
 var node_version = process.argv[2]
   , project_dir  = process.argv[3]

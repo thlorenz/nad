@@ -18,6 +18,7 @@ cd my-addon
 node ./my-addon.js
 
 ## Generate Xcode project and open it (nad build runs nad configure automatically with defaults)
+## By default nad builds with Ninja (brew install ninja). Run "nad configure --make" build with Make instead.
 nad build
 nad open
 
@@ -46,6 +47,7 @@ OPTIONS:
   --target        node version into which to inject the addon (default: version of node in path or --nodedir)
   --nodedir       Directory that contains source code of node into which to inject the addon (overrides target) (default: ./node-<target>)
   --nodename      Name of the node you are using, defaults to iojs.
+  --make          By default nad builds with Ninja cause it's much faster. In order to use make instead supply this flag.
 
 Once `nad configure` ran successfully use `nad build` to build with your addon.
 

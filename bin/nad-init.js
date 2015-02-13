@@ -21,7 +21,7 @@ var addon_name   = orig_name.replace(/[ -]/g, '_')
   , project_dir  = path.join(cwd, orig_name)
   , template_dir = path.join(__dirname, '..', 'template')
 
-log.info('nad', 'Initializing a Node.js addon project inside', project_dir);
+log.info('nad', 'Initializing a node addon project inside', project_dir);
 
 if (fs.existsSync(project_dir)) 
   return log.error('nad', project_dir + ' already exists, cannot create a project there. Please pick a different name');

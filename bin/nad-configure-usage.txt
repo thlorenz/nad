@@ -11,6 +11,7 @@ OPTIONS:
   --target        node version into which to inject the addon (default: version of node in path or --nodedir)
   --nodedir       Directory that contains source code of node into which to inject the addon (overrides target) (default: ./node-<target>)
   --nodename      Name of the node you are using, defaults to iojs.
+  --make          By default nad builds with Ninja cause it's much faster. In order to use make instead supply this flag.
 
 Once `nad configure` ran successfully use `nad build` to build with your addon.
 
@@ -30,8 +31,8 @@ MORE nad COMMANDS
 
   nad fetch   - Fetches source for configured node version.
 
-  nad inject  - Injects project in current folder into Node.js build.
+  nad inject  - Injects project in current folder into node build.
 
-  nad restore - Restores Node.js build to its original state by removing the addon project that was injected previously.
+  nad restore - Restores node build to its original state by removing the addon project that was injected previously.
 
   nad help    - Prints help about `nad configure`

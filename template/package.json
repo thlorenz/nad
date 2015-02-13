@@ -1,7 +1,7 @@
 {
   "name": "{{ name }}",
   "version": "0.0.0",
-  "description": "{{ name }} Node.js addon",
+  "description": "{{ name }} node addon",
   "main": "{{ name }}.js",
   "repository": {
   },

@@ -100,28 +100,28 @@ nad_init() {
 nad_fetch() {
   ensure_binding_gyp
   ensure_nadconfig_mk
-  log info "Fetching Node.js source"
+  log info "Fetching node source"
   nad_make fetch
 }
 
 nad_inject() {
   ensure_binding_gyp
   ensure_nadconfig_mk
-  log info "Injecting code into Node.js source"
+  log info "Injecting code into node source"
   nad_make inject
 }
 
 nad_install() {
   ensure_binding_gyp
   ensure_nadconfig_mk
-  log info "Fetching Node.js source, then configuring and building it"
+  log info "Fetching node source, then configuring and building it"
   nad_make node
 }
 
 nad_build() {
   ensure_binding_gyp
   ensure_nadconfig_mk
-  log info "Injecting code into Node.js source, then rebuilding it"
+  log info "Injecting code into node source, then rebuilding it"
   nad_make build
 }
 
@@ -142,7 +142,7 @@ nad_restore() {
 nad_open() {
   ensure_binding_gyp
   ensure_nadconfig_mk
-  log info "Opening Node.js Xcode project"
+  log info "Opening node Xcode project"
   nad_make open
 }
 

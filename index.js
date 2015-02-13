@@ -68,13 +68,13 @@ function restore_greater_0_10(nodeDir) {
 exports.inject = function inject(nodeVersion, projectDir, nodeDir, cb) {
   if (node_0_10.test(nodeVersion)) return inject_0_10(projectDir, nodeDir, cb);
   if (node_greater_0_10.test(nodeVersion)) return inject_greater_0_10(projectDir, nodeDir, cb);
-  cb(new Error('nad only works for Node.js 0.10 and greater'));
+  cb(new Error('nad only works for node 0.10 and greater'));
 }
 
 exports.restore = function restore(nodeVersion, nodeDir) {
   if (node_0_10.test(nodeVersion)) return restore_0_10(nodeDir);
   if (node_greater_0_10.test(nodeVersion)) return restore_greater_0_10(nodeDir);
-  throw new Error('nad only works for Node.js 0.10 and greater');
+  throw new Error('nad only works for node 0.10 and greater');
 }
 
 exports.injectNodeGyp = injectNodeGyp;
