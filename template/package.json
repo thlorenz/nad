@@ -7,7 +7,7 @@
   },
   "homepage": "",
   "dependencies": {
-    "nad-bindings": "~0.1.0",
+    "nad-bindings": "~0.2.0",
     "nan": "^1.6.0"
   },
   "devDependencies": {
