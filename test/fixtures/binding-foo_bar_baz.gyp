@@ -29,6 +29,16 @@
         'include_dirs': [
           '<!(node -e "require(\'nan\')")',
       ],
-    }
+    },
+    {
+      'target_name': 'foz',
+      'type': 'none',
+      'copies': [
+        {
+          'files': [ './src/foo.cc' ],
+          'destination': '/archive'
+        }
+      ],
+    },
   ]
 }
