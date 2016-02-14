@@ -13,5 +13,8 @@ var node_version = process.argv[2]
   , node_dir     = process.argv[4]
   
 nad.inject(node_version, project_dir, node_dir, function (err) {
-  if (err) return log.error('nad', err);
+  if (err) {
+    log.error('nad', err);
+    process.exit(1);
+  }
 })
